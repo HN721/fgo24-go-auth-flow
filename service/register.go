@@ -1,6 +1,9 @@
 package service
 
-import "fmt"
+import (
+	"crypto/md5"
+	"fmt"
+)
 
 type user struct {
 	name     string
@@ -30,7 +33,15 @@ func Register() {
 		name:     name,
 		email:    email,
 		ages:     ages,
-		password: password,
+		password: encrypt(password),
 	}
+	fmt.Println(password)
 	Data1 = append(Data1, Data)
+}
+func encrypt(psswd string) string {
+	hash := md5.New()
+	_, _ = hash.Write([]byte(psswd))
+
+	md5 := hash.Sum(nil)
+	return fmt.Sprintf("%x", md5)
 }
