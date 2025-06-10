@@ -1,6 +1,7 @@
 package service
 
 import (
+	"auth/utils"
 	"fmt"
 )
 
@@ -20,37 +21,40 @@ type newPassword struct {
 var choose int
 
 func (a LoginData) HandleLogin() {
-	if len(Data1) >= 1 {
-		for x := range Data1 {
-			if a.email == Data1[x].email && a.password == Data1[x].password {
-				fmt.Println("Login Berhasil")
-			} else {
-				fmt.Println("Login Failed Wrong email or Password")
-				fmt.Println("Forgot your Password?")
-				fmt.Scan(&choose)
-				if choose == 1 {
-					NewPassword()
-				}
-			}
+	found := false
+	for _, user := range Data1 {
+		if a.email == user.email && a.password == user.password {
+			fmt.Println("Login Berhasil")
+			found = true
+			utils.User()
 		}
-
-	} else {
-		fmt.Println("Silahkan Registerasi Terlebih Dahulu")
-		Register()
+	}
+	if !found {
+		fmt.Println("Login Failed: Wrong email or password")
+		fmt.Println("Forgot your Password? Tekan 1 untuk reset:")
+		fmt.Scan(&choose)
+		if choose == 1 {
+			NewPassword()
+		}
 	}
 
 }
 func (s newPassword) Forgot() string {
-
+	var result string
+	found := false
 	for x := range Data1 {
 		if Data1[x].email == s.email {
 			Data1[x].password = s.password
-
-		} else {
-			fmt.Println("Harap Masukan Email Yang benars")
+			result = s.password
+			fmt.Println("Password berhasil diubah!")
+			found = true
 		}
 	}
-	return s.password
+	if !found {
+		fmt.Println("Harap masukkan email yang benar")
+	}
+	return result
+
 }
 func Login() {
 	fmt.Println("-----Login----")
@@ -82,5 +86,4 @@ func NewPassword() {
 		password: encrypt(password),
 	}
 	result.Forgot()
-	defer Login()
 }

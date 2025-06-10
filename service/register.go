@@ -3,6 +3,7 @@ package service
 import (
 	"crypto/md5"
 	"fmt"
+	"os"
 )
 
 type user struct {
@@ -21,15 +22,30 @@ func Register() {
 	var password string
 	fmt.Println("-----------Register------------")
 	fmt.Print("Masukan Nama: ")
-	fmt.Scan(&name)
+	_, err := fmt.Scan(&name)
+	if err != nil {
+		fmt.Println("Nama Tidak boleh Kosong")
+		os.Exit(0)
+	}
 	fmt.Println(name)
 	fmt.Print("Masukan Email: ")
-	fmt.Scan(&email)
+	_, err = fmt.Scan(&email)
+	if err != nil {
+		fmt.Println("Email Tidak boleh Kosong")
+		os.Exit(0)
+	}
 	fmt.Print("Masukan Umur: ")
-	fmt.Scan(&ages)
+	_, err = fmt.Scan(&ages)
+	if err != nil {
+		fmt.Println("Umur Tidak boleh Kosong")
+		os.Exit(0)
+	}
 	fmt.Print("Masukan Password: ")
-	fmt.Scan(&password)
-
+	_, err = fmt.Scan(&password)
+	if err != nil {
+		fmt.Println("Password Tidak boleh Kosong")
+		os.Exit(0)
+	}
 	Data := &user{
 		name:     name,
 		email:    email,
