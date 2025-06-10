@@ -5,8 +5,8 @@ import (
 )
 
 type Profile interface {
-	HandleLogin() string
-	Forgot() string
+	HandleLogin()
+	Forgot()
 }
 type LoginData struct {
 	email    string
@@ -24,16 +24,16 @@ func (a LoginData) HandleLogin() {
 	} else {
 		fmt.Println("Login Failed Wrong email or Password")
 		fmt.Println("Forgot your Password?")
-		fmt.Scanln(&choose)
+		fmt.Scan(&choose)
 		if choose == 1 {
 			NewPassword()
 		}
 	}
 }
 func (s newPassword) Forgot() string {
-	result := s.password
-	result = Data1[0].password
-	return result
+	Data1[0].password = s.password
+
+	return s.password
 }
 func Login() {
 	fmt.Println("-----Login----")
@@ -45,6 +45,7 @@ func Login() {
 	fmt.Scan(&email)
 	fmt.Print("Masukan Password: ")
 	fmt.Scan(&password)
+
 	result := LoginData{
 		email:    email,
 		password: password,
@@ -60,4 +61,5 @@ func NewPassword() {
 		password: password,
 	}
 	result.Forgot()
+	defer Login()
 }
