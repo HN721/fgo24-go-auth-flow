@@ -33,10 +33,12 @@ func Register() {
 		name:     name,
 		email:    email,
 		ages:     ages,
-		password: encrypt(password),
+		password: password,
 	}
 	fmt.Println(password)
 	Data1 = append(Data1, Data)
+	fmt.Println("Sucessfully Registered")
+	Login()
 }
 func encrypt(psswd string) string {
 	hash := md5.New()
