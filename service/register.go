@@ -29,14 +29,14 @@ func Register() {
 	fmt.Print("Masukan Password: ")
 	fmt.Scan(&password)
 
-	Data := user{
+	Data := &user{
 		name:     name,
 		email:    email,
 		ages:     ages,
 		password: password,
 	}
 	fmt.Println(password)
-	Data1 = append(Data1, Data)
+	Data1 = append(Data1, *Data)
 	fmt.Println("Sucessfully Registered")
 	Login()
 }
