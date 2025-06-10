@@ -19,6 +19,7 @@ func Register() {
 	var email string
 	var ages int
 	var password string
+	fmt.Println("-----------Register------------")
 	fmt.Print("Masukan Nama: ")
 	fmt.Scan(&name)
 	fmt.Println(name)
@@ -33,11 +34,12 @@ func Register() {
 		name:     name,
 		email:    email,
 		ages:     ages,
-		password: password,
+		password: encrypt(password),
 	}
 	fmt.Println(password)
 	Data1 = append(Data1, *Data)
 	fmt.Println("Sucessfully Registered")
+	fmt.Print(Data1)
 	Login()
 }
 func encrypt(psswd string) string {

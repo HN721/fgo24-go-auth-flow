@@ -19,16 +19,22 @@ type newPassword struct {
 var choose int
 
 func (a LoginData) HandleLogin() {
-	if a.email == Data1[0].email && a.password == Data1[0].password {
-		fmt.Println("Login Berhasil")
-	} else {
-		fmt.Println("Login Failed Wrong email or Password")
-		fmt.Println("Forgot your Password?")
-		fmt.Scan(&choose)
-		if choose == 1 {
-			NewPassword()
+	if len(Data1) >= 1 {
+		if a.email == Data1[0].email && a.password == Data1[0].password {
+			fmt.Println("Login Berhasil")
+		} else {
+			fmt.Println("Login Failed Wrong email or Password")
+			fmt.Println("Forgot your Password?")
+			fmt.Scan(&choose)
+			if choose == 1 {
+				NewPassword()
+			}
 		}
+	} else {
+		fmt.Println("Silahkan Registerasi Terlebih Dahulu")
+		Register()
 	}
+
 }
 func (s newPassword) Forgot() string {
 	Data1[0].password = s.password
@@ -48,7 +54,7 @@ func Login() {
 
 	result := LoginData{
 		email:    email,
-		password: password,
+		password: encrypt(password),
 	}
 	result.HandleLogin()
 
@@ -57,8 +63,8 @@ func NewPassword() {
 	var password string
 	fmt.Print("Masukan Password: ")
 	fmt.Scan(&password)
-	result := newPassword{
-		password: password,
+	result := &newPassword{
+		password: encrypt(password),
 	}
 	result.Forgot()
 	defer Login()
